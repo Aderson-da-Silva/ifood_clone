@@ -1,0 +1,188 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Country {
+  id: ID!
+  code: String!
+  name: String!
+  patter_number: Int!
+  states: [State!]
+}
+
+type State {
+  id: Int!
+  name: String!
+  initials: String!
+  cities: [City!]
+  country_id: Int!
+  country: Country!
+}
+
+type City {
+  id: Int!
+  name: String!
+  adresses: [Address!]
+  state_id: Int!
+  state: State!
+}
+
+type Address {
+  id: Int!
+  address: String!
+  number: Int!
+  zip_code: String!
+  city_id: Int!
+  city: City!
+  users: [User!]!
+}
+
+type Restaurant {
+  id: String!
+  name: String!
+  description: String
+  imageUrl: String
+  address: Address!
+  owner: User!
+  orders: [Order!]
+}
+
+type OrderItem {
+  id: Int!
+  order_id: Int!
+  order: Order!
+  productName: String!
+  quantity: Float!
+  unitPrice: Float!
+}
+
+type Order {
+  id: Int!
+  description: String
+  status: OrderStatus!
+  total: Float!
+  restaurant_id: String!
+  restaurant: Restaurant!
+  order_itens: [OrderItem!]
+  client_id: Int!
+  client: User!
+}
+
+"""The status of an order"""
+enum OrderStatus {
+  PENDING
+  PREPARING
+  IN_TRANSIT
+  DELIVERED
+}
+
+type Geolocation {
+  lat: Float!
+  lng: Float!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  imageUrl: String
+  document_number: String!
+  dt_nasc: DateTime!
+  phone: String!
+  addresses: [Address!]!
+  restaurants: [Restaurant!]!
+  orders: [Order!]!
+  role: UserRole!
+  lastLocation: Geolocation
+  created_at: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""User role types"""
+enum UserRole {
+  ADMIN
+  CLIENT
+  RESTAURANT
+  DELIVERY
+}
+
+type Query {
+  user(id: String!): User!
+  getAllCountries: [Country!]!
+  getAllCities: [City!]!
+  getAllStates: [State!]!
+  getAllAdresses: [Address!]!
+  restaurant(id: Int!): Restaurant!
+  order(id: Int!): Order!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: String!): User!
+  createRestaurant(createRestaurantInput: CreateRestaurantInput!): Restaurant!
+  updateRestaurant(updateRestaurantInput: UpdateRestaurantInput!): Restaurant!
+  removeRestaurant(id: Int!): Restaurant!
+  createOrder(createOrderInput: CreateOrderInput!): Order!
+  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
+  removeOrder(id: Int!): Order!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+  imageUrl: String
+  document_number: String!
+  dt_nasc: DateTime!
+  phone: String!
+  addresses: [AddressInput!]
+  role: UserRole! = CLIENT
+}
+
+input AddressInput {
+  address: String!
+  number: Int!
+  zip_code: String!
+  city_id: Int!
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  password: String
+  imageUrl: String
+  document_number: String
+  dt_nasc: DateTime
+  phone: String
+  addresses: [AddressInput!]
+  role: UserRole = CLIENT
+  id: Int!
+}
+
+input CreateRestaurantInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateRestaurantInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateOrderInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateOrderInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
