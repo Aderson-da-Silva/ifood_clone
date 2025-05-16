@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserService } from '../user/user.service';
-import { UserModule } from '../user/user.module';
-import { SharedModule } from '../shared/shared.module';
+import { UserModule } from 'src/modules/user/user.module';
+import { SharedModule } from 'src/modules/shared/shared.module';
 
 @Module({
   imports: [UserModule, SharedModule],

@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
-import { CreateUserInput } from '../user/dto/create-user.input';
-import { User } from '../user/entities/user.entity';
+import { CreateUserInput } from 'src/modules/user/dto/create-user.input';
+import { User } from 'src/modules/user/entities/user.entity';
+import { UserService } from 'src/modules/user/user.service';
+
+
 
 const SALT_ROUNDS = 10;
 
